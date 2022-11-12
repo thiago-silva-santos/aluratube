@@ -1,7 +1,8 @@
 import config from '../config.json'
 import styled from 'styled-components'
-function Header() {
+import Banner from './Banner'
      const StyledHeader = styled.div`
+     background-color: ${({ theme }) => theme.backgroundLevel1};
           img {
                width: 80px;
                height: 80px;
@@ -16,9 +17,10 @@ function Header() {
                margin-top: 60px;
           }
      `
+function Header() {
      return (
           <StyledHeader>
-               {/* <img src='banner'/> */}
+               <Banner bg={config.bg}/>
                <section className='user-info'>
                     <img src={`https://github.com/${config.github}.png`} />
                     <div>

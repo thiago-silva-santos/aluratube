@@ -2,22 +2,20 @@
 import config from '../config.json'
 import Header from '../components/Header'
 import Timeline from '../components/Timeline'
-import { CSSReset } from '../components/CSSReset'
 import Menu from '../components/Menu'
+import { useState } from 'react'
 
 export default function Home() {
+  const [valorDoFiltro, setValorDoFiltro] = useState("");
   return (
-    <>
-      <CSSReset />
       <div style={{
         display: "flex",
         flexDirection: "column",
         flex: 1,
       }}>
-        <Menu />
+        <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro}/>
         <Header />
-        <Timeline playlists={config.playlists} />
+        <Timeline searchValue={valorDoFiltro} playlists={config.playlists}/>
       </div>
-    </>
   )
 }

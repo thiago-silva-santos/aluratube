@@ -1,9 +1,6 @@
 import styled from "styled-components"
 
 
-
-function Timeline(props) {
-     
 const StyledTimeline = styled.div`
   flex: 1;
   width: 100%;
@@ -32,10 +29,10 @@ const StyledTimeline = styled.div`
       width: calc(100vw - 16px * 4);
       display: grid;
       grid-gap: 16px;
-      grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       grid-auto-flow: column;
-      grid-auto-columns: minmax(200px,1fr);
-      overflow-x: scroll;
+      grid-auto-columns: minmax(200px, 1fr);
+      overflow: auto;
       scroll-snap-type: x mandatory;
       a {
         scroll-snap-align: start;
@@ -48,31 +45,37 @@ const StyledTimeline = styled.div`
       }
     }
   }
-`
+`;
+
+function Timeline({ searchValue, ...props }) {
+
 
      const playlistsNames = Object.keys(props.playlists)
      return (
           <StyledTimeline>
                {
-                    playlistsNames.map((item, index) => {
+                    playlistsNames.map((item) => {
                          const videos = props.playlists[item]
                          return (
-                              <section key={index}>
+                              <section key={item}>
                                    <h2>{item}</h2>
                                    <div>
-                                        {
-                                             videos.map((video, index) => {
+                                        {videos
+                                             .filter((video) => {
+                                                  const titleNormalized = video.title.toLowerCase();
+                                                  const searchValueNormalized = searchValue.toLowerCase();
+                                                  return titleNormalized.includes(searchValueNormalized)
+                                             })
+                                             .map((video) => {
                                                   return (
-                                                       <a key={index}>
+                                                       <a key={video.url} href={video.url}>
                                                             <img src={video.thumb} />
                                                             <span>
                                                                  {video.title}
                                                             </span>
                                                        </a>
                                                   )
-                                             })
-                                        }
-
+                                             })}
                                    </div>
                               </section>
                          )
