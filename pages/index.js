@@ -12,6 +12,7 @@ export default function Home() {
         display: "flex",
         flexDirection: "column",
         flex: 1,
+        boxSizing: 'border-box'
       }}>
         <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro}/>
         <Header />

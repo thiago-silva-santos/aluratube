@@ -11,9 +11,13 @@ export const CSSReset = createGlobalStyle`
     font-family: sans-serif;
     background-color: ${({ theme }) => theme.backgroundBase};
     color: ${({ theme }) => theme.textColorBase};
+
   }
+  /* body.modal-open {
+    overflow-y: hidden;
+  } */
   /* NextJS */
-  html {
+  /* html {
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -25,7 +29,7 @@ export const CSSReset = createGlobalStyle`
   #__next {
     display: flex;
     flex: 1;
-  }
+  } */
   /* Globals */
   button,
   a {
