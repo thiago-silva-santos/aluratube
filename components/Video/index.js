@@ -1,6 +1,17 @@
 import React, {useEffect} from "react";
 import { StyledRegisterVideo } from "./styles";
+import { createClient } from "@supabase/supabase-js"
 
+
+const PROJECT_URL = "https://dodkahylpbcegtmqrjhr.supabase.co";
+const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRvZGthaHlscGJjZWd0bXFyamhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgzNTg4NjEsImV4cCI6MTk4MzkzNDg2MX0.4vBq3_TP4-2K0FY54bf9LiF_bBTiQBjvX9gtpgi2hNk";
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
+
+
+function getThumbnail(url) {
+    let splitted = url.split("be/")[1]
+    return `https://img.youtube.com/vi/${splitted}/hqdefault.jpg`;
+}
 
 function useForm(propsDoForm) {
     const [values, setValues] = React.useState(propsDoForm.initialValues);
@@ -24,9 +35,9 @@ function useForm(propsDoForm) {
 
 export default function RegisterVideo() {
     const formCadastro = useForm({
-        initialValues: { titulo: "Frost punk", url: "https://youtube.." }
+        initialValues: { titulo: "Simple Man", url: "https://youtu.be/l-5aPNxv-pU" }
     });
-    const [formVisivel, setFormVisivel] = React.useState(true);
+    const [formVisivel, setFormVisivel] = React.useState(false);
 
     useEffect(() => {
         if(formVisivel == true) {
@@ -46,6 +57,19 @@ export default function RegisterVideo() {
                     <form onSubmit={(evento) => {
                         evento.preventDefault();
                         console.log(formCadastro.values);
+                        console.log(getThumbnail(formCadastro.values.url))
+                        supabase.from("videodata").insert({
+                            title: formCadastro.values.titulo,
+                            url: formCadastro.values.url,
+                            thumbnail: getThumbnail(formCadastro.values.url),
+                            playlist: "jogos",
+                         })
+                         .then((oqueveio) => {
+                            console.log(oqueveio);
+                         })
+                         .catch((err) => {
+                            console.log(err);
+                         })
 
                         setFormVisivel(false);
                         formCadastro.clearForm();
